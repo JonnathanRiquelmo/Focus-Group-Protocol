@@ -1,0 +1,45 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[brazil]{babel}
+\usepackage{fancyhdr}
+\usepackage{fontspec}
+\usepackage[margin=3cm,headheight=1.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\setmainfont{Times New Roman}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+\chead{\includegraphics[height=1.5cm]{Unipampa}}
+%\cfoot{\thepage}
+
+\renewcommand{\headrulewidth}{0pt}
+
+\setlength{\parindent}{0cm}
+
+\begin{document}
+
+\begin{center}
+  \textbf{{\Large {Glossário de Termos}}}
+  \par\vspace{12pt}
+\end{center}
+
+\begin{description}
+  \item [Linguagem de Domínio Específico:] É uma linguagem de programação ou linguagem de especificação executável que oferece, por meio de notações e abstrações apropriadas, poder expressivo focado e restrito a um domínio de problema específico \cite{vanDeursen:2000,Fowler:2010}.
+  \item [Modelo Conceitual:] É a descrição de um banco de dados de forma independente da implementação usada em sistemas de gerenciamento de banco de dados (SGBDs) \cite{heuser:2009}.
+  \item [Abordagem ER:] A abordagem entidade-relacionamento é a técnica \cite{Chen:1976} mais difundida para criação de modelos conceituais de bancos de dados. Esta abordagem foi tão bem aceita que passou a ser considerada uma referência definitiva para a modelagem de banco de dados relacionais. É composta basicamente por um método de diagramação e de conceitos que devem ser respeitados \cite{Cougo:2013}.
+  \item [Entidade:] É uma representação de um conjunto de objetos do domínio modelado \cite{heuser:2009}.
+  \item [Atributo:] São as características próprias das entidades \cite{heuser:2009}.
+  \item [Relacionamento:] É a representação da associação entre os objetos modelados \cite{heuser:2009}.
+  \item [Cardinalidade:] Registra o número de ocorrências, possuindo um número mínimo e máximo, com que as entidades podem se associar \cite{heuser:2009}.
+\end{description}
+
+{\footnotesize \bibliography{Bibliografia}}
+\bibliographystyle{abbrv}
+
+\end{document}

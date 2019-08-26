@@ -1,0 +1,275 @@
+\documentclass[xetex,12pt]{beamer}
+
+\usepackage[brazil]{babel}
+\usepackage{xltxtra}
+\usepackage{tikz}
+\usepackage{../tikz-uml}
+
+\newcommand{\hla}[1]{\textcolor{unipampa-red}{#1}}
+\newcommand{\hlb}[1]{\textcolor{unipampa-blue}{#1}}
+\newcommand{\hlc}[1]{\textcolor{unipampa-green}{#1}}
+\newcommand{\hld}[1]{\textcolor{unipampa-gray}{#1}}
+
+\usetheme{unipampa}
+
+\usetikzlibrary{chains,matrix,positioning,decorations.pathreplacing,calc}
+\tikzumlset{font=\sffamily\tiny}
+
+\title[Uma DSL para a Modelagem Conceitual de BDs Relacionais]{Uma Linguagem Específica de Domínio para a Representação de Modelos Conceituais de Bancos de Dados Relacionais}
+%\subtitle{Grupo Focal}
+\author[]{Jonnathan Riquelmo\\Prof. Dr. Maicon Bernardino\\Prof. Dr. Fábio Basso}
+\institute[Unipampa / LESSE]{Universidade Federal do Pampa\\Laboratory of Empirical Studies in Software Engineering (LESSE)}
+\date{2019/2}
+
+\begin{document}
+
+\begin{frame}[plain]{}
+  \titlepage
+\end{frame}
+
+\begin{frame}[t]{Roteiro}
+  \tableofcontents
+\end{frame}
+
+\AtBeginSection[] {
+  \begin{frame}[t]{Roteiro}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+% ################################## %
+\section{Abertura}
+% ################################## %
+
+\begin{frame}[t]{Preliminares}
+  \begin{center}
+    \hlb{\textbf{Obrigado por Participar!}}
+  \end{center}
+  \hlc{O que é um grupo focal?}
+  \begin{center}
+    Um grupo focal é um método de pesquisa que reúne pessoas em uma sala para prover \textit{feedback} sobre algo.
+  \end{center}
+  \hlc{Como funciona um grupo focal?}
+  \begin{center}
+    \includegraphics[scale=0.4]{./Figuras/FocusGroup}
+  \end{center} 
+\end{frame}
+
+\begin{frame}{Objetivo Principal}
+  \begin{center}
+    Discutir sobre a gramática de uma linguagem de domínio específico (Domain Specific Language - DSL) para modelagem conceitual de bancos de dados relacionais.
+  \end{center}
+%  \hlc{O que significa adequabilidade?}
+%  \begin{itemize}
+%    \item Correto ou apropriado para uma pessoa, propósito ou situação em particular.
+%    \item Correto ou aceitável para alguém ou algo.
+%  \end{itemize}
+%  \hlc{Questão de Investigação?}
+%  \begin{center}
+%    \hlb{A abordagem de modelagem proposta}\\\hla{é adequada para}\\\hlb{modelagem conceitual de sistemas autoadaptativos?}
+%  \end{center}
+\end{frame}
+
+\begin{frame}[t]{Primeira Tarefa}
+  \begin{enumerate}
+    \item Ler o \hlb{Termo de Consentimento Livre e Esclarecido}.
+    \begin{itemize}
+      \item Se concordar, por favor, complete-o com o nome e assine o documento.
+    \end{itemize}   
+    \item Responder o \hlb{Questionário de Perfil do Participante}. 
+  \end{enumerate}  
+\end{frame}
+
+% ################################## %
+\section{Fundamentação}
+% ################################## %
+
+\begin{frame}[t]{Conceitos Principais}
+  \begin{center}
+    \begin{tikzpicture}font=\sffamily\footnotesize
+%      \draw[dotted] (0,0) grid (12,7);
+  
+      \node[draw, fill=green!25, minimum height=1cm, text width=3cm, align=center, anchor=north west] (N1) at (0,7) {\textbf{Bancos de Dados Relacionais}};
+      \node[align=left, anchor=north west] (N11) at ($(N1.south west)+(0.25,-0.5)$) {coleção de dados com\\relacionamentos predefinidos;};
+      \node[align=left, anchor=north west] (N12) at ($(N11.south west)+(0,-0.25)$) {possui estrutura orientada a tabelas.};
+      \draw[thick, ->] (N1.south) |- ($(N1.south west)+(0,-0.25)$) |- (N11.west);
+      \draw[thick, ->] (N1.south) |- ($(N1.south west)+(0,-0.25)$) |- (N12.west);
+
+      \node[draw, fill=blue!25, minimum height=1cm, text width=3cm, align=center, anchor=north] (N2) at ($(N1.south)+(0,-3)$) {\textbf{Modelagem Conceitual}};
+      \node[align=left, anchor=north west] (N21) at ($(N2.south west)+(0.25,-0.5)$) {descreve conceitos e relações;};
+      \node[align=left, anchor=north west] (N22) at ($(N21.south west)+(0,-0.25)$) {reflete aspectos do mundo real.};
+      \draw[thick, ->] (N2.south) |- ($(N2.south west)+(0,-0.25)$) |- (N21.west);
+      \draw[thick, ->] (N2.south) |- ($(N2.south west)+(0,-0.25)$) |- (N22.west);
+
+      \node[draw, fill=red!25, minimum height=1cm, text width=3cm, align=center, anchor=north west] (N3) at ($(N1.south east)+(3.75,-1)$) {\textbf{Modelagem Conceitual de Bancos de Dados Relacionais}};
+      \node[align=left, anchor=north west] (N31) at ($(N3.south west)+(0.25,-0.5)$) {abordagem ER;};
+      \node[align=left, anchor=north west] (N32) at ($(N31.south west)+(0,-0.25)$) {independente de implementação.};
+      \draw[thick, ->] (N3.south) |- ($(N3.south west)+(0,-0.25)$) |- (N31.west);
+      \draw[thick, ->] (N3.south) |- ($(N3.south west)+(0,-0.25)$) |- (N32.west);
+      \draw[very thick, ->] (N1.east) -- (N3.west);
+      \draw[very thick, ->] (N2.east) -- (N3.west);  
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+\begin{frame}[t]{Conceitos Relacionados}
+  \begin{description}[Conceitos]
+    \item [Entidade:] é o conjunto de objetos da realidade modelada.
+    \begin{itemize}
+      \item \hlb{Pessoa}, \hlb{Departamento}, \hlb{Produto}
+    \end{itemize}
+    \\~\\
+    \item [Relacionamento:] é o conjunto de associações entre entidades.
+    \begin{itemize}
+      \item \hlb{Nome} da Pessoa
+      \item \hlb{Preço} do Produto
+    \end{itemize}
+    \\~\\
+    \item [Atributo:] é um dado associado a cada ocorrência de uma entidade ou de um relacionamento.
+    \begin{itemize}
+      \item Muitas Pessoas estão \hlb{lotadas} em um departamento
+      \item Um ou muitos Produtos \hlb{pertencem} a uma Marca
+    \end{itemize}
+  \end{description}
+\end{frame}
+
+\begin{frame}[t]{Conceitos Relacionados}
+  \begin{description}[Conceitos]
+    \item [Cardinalidade] são as ocorrências de uma entidade que podem estar associadas através de um relacionamento.
+    \begin{itemize}
+      \item Muitas \hlb{(1,n)} Pessoas estão lotadas em um \hlb{(1,1)} departamento
+      \item Um ou muitos \hlb{(1,n)} Produtos pertencem a uma \hlb{(1,1)} Marca
+      \item Uma Pessoa \hlb{(1,1)} possui nenhum ou muitos \hlb{(0,n)} Dependentes
+    \end{itemize} 
+  \end{description}
+\end{frame}
+
+%\begin{frame}[t]{UML as Modeling Language}
+%  \begin{center}
+%    UML supports conceptual modeling through class diagrams,\\which capture the system structure as classes,\\constraints, and relationships.
+%  \end{center}
+%  \begin{tikzpicture}font=\sffamily\tiny
+%%    \draw[dotted] (0,0) grid (12,7);
+%  
+%    \umlclass[x=3, y=6, anchor=north west]{Person}{
+%      name:String
+%    }
+%    
+%    \umlclass[below left=1cm and 0cm of Person, anchor=north east]{NaturalPerson}{
+%      identification:Integer
+%    }
+%      
+%    \umlemptyclass[below=0.5cm of NaturalPerson, anchor=north]{Employee}
+%      
+%    \umlclass[below right=1cm and 0cm of Person, anchor=north west]{LegalPerson}{
+%      registration:Integer
+%    }
+%    
+%    \umlemptyclass[below=0.5cm of LegalPerson, anchor=north]{Company}
+%      
+%    \umlclass[right=5cm of Person, anchor=west]{Produt}{
+%      name:String
+%    }
+%  
+%    \umlclass[below=1.5cm of Produt, anchor=north]{Component}{
+%      description:String
+%    }
+%     
+%    \umlinherit[geometry=|-|]{NaturalPerson}{Person}
+%    \umlinherit{Employee}{NaturalPerson}
+%    \umlinherit[geometry=|-|]{LegalPerson}{Person}
+%    \umlinherit{Company}{LegalPerson}
+%  
+%    \umlassoc[mult1=1..*, arg1=employees, pos1=0, align1=left, mult2=1, arg2=company, pos2=1, align2=right]{Employee}{Company}
+%    \umlassoc[geometry=-|-, mult1=1, arg1=company, pos1=0, align1=left, mult2=1..*, arg2=products, pos2=3, align2=right]{Company}{Produt}
+%    
+%    \umlaggreg[mult1=1..*, arg1=products, mult2=1..*, arg2=components, pos2=0.8]{Produt}{Component}
+%  
+%    \node[align=center] at (3.9,1.9) {works};
+%    \node[align=center] at (8.2,3.8) {makes};
+%    \node[align=center] at (10.3,4.2) {has};
+%  \end{tikzpicture}
+%\end{frame}
+
+\begin{frame}[t]{Requisitos para Modelagem}
+  \hlc{A modelagem conceitual de um BD relacional deve:}
+  \\~\\
+  \begin{description}[]
+    \item [Req-1:] identificar as entidades relevantes para o domínio.
+    \\~\\
+    \item [Req-2:] identificar os atributos que definem as características das entidades ou relacionamentos.
+    \\~\\
+    \item [Req-3:] identificar as associações entre as entidades.
+    \\~\\
+    \item [Req-4:] identificar o número de ocorrências possíveis entre as entidades.
+  \end{description}
+\end{frame}
+
+% ################################## %
+\section{Discussões}
+% ################################## %
+
+\begin{frame}[t]{Discussão 1}
+  \hlc{Considerando que:}
+  \begin{itemize}
+    \item modelos conceituais de BDs mapeiam conceitos e relações de um domínio;
+    \item uma DSL com abordagem textual apresenta um conjunto de sentenças bem definidas por uma sintaxe e semântica própria.
+  \end{itemize}
+  \vspace{12pt}
+  \begin{block}{}
+    \begin{center}
+      É plausível aplicar uma DSL na modelagem conceitual de BDs relacionais?
+    \end{center} 
+  \end{block}
+\end{frame}
+
+\begin{frame}[t]{Discussão 2}
+  \hlc{Considerando que:}
+  \begin{itemize}
+    \item sim, é plausível aplicar uma DSL na modelagem conceitual de BDs relacionais;
+    \item modelos conceituais de BDs relacionais devem especificar:
+    \begin{itemize}
+          \item as entidades do domínio;
+          \item os atributos das entidades;
+          \item os relacionamentos entre as entidades;
+          \item as cardinalidades dos relacionamentos. 
+    \end{itemize}
+  \end{itemize}
+  \vspace{12pt}
+  \begin{block}{}
+    \begin{center}
+      Como deve ser a gramática aplicada para a\\modelagem conceitual de BDs relacionais?
+    \end{center}
+  \end{block}
+\end{frame}
+
+\begin{frame}[t]{Discussão 3}
+  \hlc{Considerando:}
+  \begin{itemize}
+    \item as versões da gramática de modelagem proposta (ver impresso).
+  \end{itemize}
+  \vspace{12pt}
+  \begin{block}{}
+    \begin{center}
+      Qual gramática para a DSL de modelagem proposta é mais\\adequada para modelagem conceitual de BDs relacionais?
+    \end{center}
+  \end{block}
+\end{frame}
+
+% ################################## %
+\section{Fechamento}
+% ################################## %
+
+\begin{frame}[t]{Contribuições Finais}
+  \begin{center}
+    \hlb{Fiquem à vontade para contribuir.}
+  \end{center}
+  \vspace{46pt}
+  \Huge{\centerline{Obrigado por Participar!}}
+\end{frame}
+
+\begin{frame}[plain]{}
+  \titlepage
+\end{frame}
+
+\end{document}

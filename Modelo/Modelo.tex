@@ -1,0 +1,117 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{fontspec}
+\usepackage[margin=0.5cm]{geometry}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{../tikz-uml}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{graphicx}
+
+\setmainfont{Times New Roman}
+
+\usetikzlibrary{chains,matrix,positioning,decorations.pathreplacing,calc}
+\tikzumlset{font=\sffamily\tiny}
+
+\begin{document}
+
+\input{GramaticasDSL}
+
+
+
+\begin{figure}[!htb]
+\centering
+\captionsetup{labelformat=empty}
+\caption{Exemplo de uso da Gramática DSL - Modelo 1}
+\label{fig:DSLvs1Uso}
+\begin{normalsize}
+\begin{lstlisting}[language = ERDSL, frame = trbl]
+Domain University;
+
+Entities{
+	Person{ 
+		PID: int isIdentifier,
+		Name: string
+	}
+	Teacher isA Person{ 
+		Phone: int,
+		Salary: money
+	}
+	Student isA Person{ 
+		Course: string
+	} 	
+	OutsrcEmployee isA Person{
+	    OutsourcedEID: int,
+	    Company: string
+	}
+	Class{
+		ClassID: int isIdentifier,
+		Course: string,
+		Semester: string
+	}
+	ClassRoom {
+		ClassRoomID: int isIdentifier,
+		Capacity: int
+	}
+};
+
+Relationships{	 
+	[many Student isRelatedWith many Class]
+	TeacherClass [many Teacher isRelatedWith many Class]
+	ClassSchedule [many TeacherClass isRelatedWith many ClassRoom]
+	        {ClassScheduleID: int, DayOfWeek: datetime, Discipline: string}
+	Supervisor [zero one OutsrcEmployee isRelatedWith many OutsrcEmployee]
+};
+\end{lstlisting}
+\end{normalsize}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\captionsetup{labelformat=empty}
+\caption{Exemplo de uso da Gramática DSL - Modelo 1}
+\label{fig:DSLvs1Uso2}
+\begin{normalsize}
+\begin{lstlisting}[language = ERDSL2, frame = trbl]
+Domain University
+
+Entities{
+	Person{ 
+		* PID int, 
+		Name string
+	}
+	Teacher is Person{ 
+		Phone int, 
+		Salary money
+	}
+	Student is Person{ 
+		Course string
+	} 	
+	OutsrcEmployee is Person{
+	    OutsourcedEID int, 
+	    Company string
+	}
+	Class{
+		* ClassID int, 
+		Course string, 
+		Semester string
+	}
+	ClassRoom {
+		* ClassRoomID int, 
+		Capacity int
+	}
+}
+
+Relationships{	 
+	[(1,N) Student relates (1,N) Class]
+	TeacherClass [(1,N) Teacher relates (1,N) Class]
+	ClassSchedule [(1,N) TeacherClass relates (1,N) ClassRoom]
+	        {ClassScheduleID int, DayOfWeek datetime, Discipline string}
+	Supervisor [(0,1) OutsrcEmployee relates (1,N) OutsrcEmployee]
+}
+\end{lstlisting}
+\end{normalsize}
+\end{figure}
+
+\end{document}

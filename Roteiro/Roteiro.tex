@@ -141,55 +141,24 @@
       \item Um ou muitos \hlb{(1,n)} Produtos pertencem a uma \hlb{(1,1)} Marca
       \item Uma Pessoa \hlb{(1,1)} possui nenhum ou muitos \hlb{(0,n)} Dependentes
     \end{itemize} 
+    \\~\\
+    \item [Generalização/Especialização] é a identificação de subconjuntos de entidades que compartilham características em comum.
+    \begin{itemize}
+      \item Elemento de caracterização semântica
+      \item Conceito de herança
+    \end{itemize} 
+    
   \end{description}
 \end{frame}
 
-%\begin{frame}[t]{UML as Modeling Language}
-%  \begin{center}
-%    UML supports conceptual modeling through class diagrams,\\which capture the system structure as classes,\\constraints, and relationships.
-%  \end{center}
-%  \begin{tikzpicture}font=\sffamily\tiny
-%%    \draw[dotted] (0,0) grid (12,7);
-%  
-%    \umlclass[x=3, y=6, anchor=north west]{Person}{
-%      name:String
-%    }
-%    
-%    \umlclass[below left=1cm and 0cm of Person, anchor=north east]{NaturalPerson}{
-%      identification:Integer
-%    }
-%      
-%    \umlemptyclass[below=0.5cm of NaturalPerson, anchor=north]{Employee}
-%      
-%    \umlclass[below right=1cm and 0cm of Person, anchor=north west]{LegalPerson}{
-%      registration:Integer
-%    }
-%    
-%    \umlemptyclass[below=0.5cm of LegalPerson, anchor=north]{Company}
-%      
-%    \umlclass[right=5cm of Person, anchor=west]{Produt}{
-%      name:String
-%    }
-%  
-%    \umlclass[below=1.5cm of Produt, anchor=north]{Component}{
-%      description:String
-%    }
-%     
-%    \umlinherit[geometry=|-|]{NaturalPerson}{Person}
-%    \umlinherit{Employee}{NaturalPerson}
-%    \umlinherit[geometry=|-|]{LegalPerson}{Person}
-%    \umlinherit{Company}{LegalPerson}
-%  
-%    \umlassoc[mult1=1..*, arg1=employees, pos1=0, align1=left, mult2=1, arg2=company, pos2=1, align2=right]{Employee}{Company}
-%    \umlassoc[geometry=-|-, mult1=1, arg1=company, pos1=0, align1=left, mult2=1..*, arg2=products, pos2=3, align2=right]{Company}{Produt}
-%    
-%    \umlaggreg[mult1=1..*, arg1=products, mult2=1..*, arg2=components, pos2=0.8]{Produt}{Component}
-%  
-%    \node[align=center] at (3.9,1.9) {works};
-%    \node[align=center] at (8.2,3.8) {makes};
-%    \node[align=center] at (10.3,4.2) {has};
-%  \end{tikzpicture}
-%\end{frame}
+\begin{frame}[t]{Diagrama Entidade-Relacionamento}
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{PDF/Exemplo.jpg}
+\end{figure}
+  
+\end{frame}
 
 \begin{frame}[t]{Requisitos para Modelagem}
   \hlc{A modelagem conceitual de um BD relacional deve:}
@@ -241,6 +210,15 @@
       Como deve ser a gramática aplicada para a\\modelagem conceitual de BDs relacionais?
     \end{center}
   \end{block}
+\end{frame}
+
+\begin{frame}[t]{Discussão 2}
+\hlc{Exemplo de Diagrama Entidade-Relacionamento}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{PDF/ModeloER.jpg}
+\end{figure}
+  
 \end{frame}
 
 \begin{frame}[t]{Discussão 3}
